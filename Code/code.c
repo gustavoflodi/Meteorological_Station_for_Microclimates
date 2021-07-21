@@ -9,7 +9,7 @@
 #include <linux/i2c-dev.h>
 #include <sys/ioctl.h>
 
-void main()
+void main(void)
 {
 	//The group decided to use I2C as the bus to connect peripherals
 	int arch;
