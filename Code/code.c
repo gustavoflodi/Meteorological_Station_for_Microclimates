@@ -118,12 +118,13 @@ void main(void)
 	float temp_off1 = (((float)t_conv) / 16384.0 - ((float)digital_Temp1) / 1024.0) * ((float)digital_Temp2);
 	float temp_off2 = ((((float)t_conv) / 131072.0 - ((float)digital_Temp1) / 8192.0) * (((float)adc_t)/131072.0 - ((float)digital_Temp1)/8192.0)) * ((float)digital_Temp3);
 	
-	float t_after = (long)(temp_off1 + temp_off2);
-	float t_after2 = (temp_off1 + temp_off2) / 5120.0;
-	float t_final = t_after2 * 1.8 + 32;
+	//Calculations in absolute, celsius and fahrenheit 
+	float t_abs = (long)(temp_off1 + temp_off2);
+	float t_cel = (temp_off1 + temp_off2) / 5120.0;
+	float t_fahr = t_cel * 1.8 + 32;
 
 	// Pressure offset calculations
-	pres_off1 = ((float)t_after / 2.0) - 64000.0;
+	pres_off1 = ((float)t_abs / 2.0) - 64000.0;
 	pres_off2 = pres_off1 * pres_off1 * ((float)digital_Pres6) / 32768.0;
 	pres_off2 = pres_off2 + pres_off1 * ((float)digital_Pres5) * 2.0;
 	pres_off2 = (pres_off2 / 4.0) + (((float)digital_Pres4) * 65536.0);
@@ -134,5 +135,10 @@ void main(void)
 	pres_off1 = ((float) digital_Pres9) * pres_after * pres_after / 2147483648.0;
 	pres_off2 = pres_after * ((float) digital_Pres8) / 32768.0;
 	float pressure_final = (pres_after + (pres_off1 + pres_off2 + ((float)digital_Pres7)) / 16.0) / 100;
+	
+	// Info to the user
+	printf("Temperatura em Celsius : %.2f C \n\n", t_cel);
+	printf("Temperatura em Fahrenheit : %.2f F \n\n", t_fahr);
+	printf("Pressao : %.2f hPa \n\n", pressure_final);
 	
 }	
