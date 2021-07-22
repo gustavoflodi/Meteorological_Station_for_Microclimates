@@ -90,6 +90,49 @@ void main(void)
 	{
 		digital_Pres9 -= 65536;
 	}
-  
+  	
+	// Select register to control measurement(0xF4)
+	// Normal mode, temp and pressure = 1(0x27)
+	char preset[2] = {0};
+	char info[8] = {0};
+	preset[0] = 0xF4;
+	preset[1] = 0x27;
+	write(arch, preset, 2);
+	// Select config register(0xF5)
+	// Stand_by time = 1000 ms(0xA0)
+	preset[0] = 0xF5;
+	preset[1] = 0xA0;
+	write(arch, preset, 2);
+
+	// Read 8 bytes of data from register(0xF7)
+	// pressure e temperature most and least significant bits
+	rg1[0] = 0xF7;
+	write(arch, rg1, 1);
+	read(arch, info, 8);
+
+	// Convert pressure and temperature info to 19-bits
+	long p_conv = ((long)(info[0] * 65536 + ((long)(info[1] * 256) + (long)(info[2] & 0xF0)))) / 16;
+	long t_conv = ((long)(info[3] * 65536 + ((long)(info[4] * 256) + (long)(info[5] & 0xF0)))) / 16;
+	
+	// Temperature offset calculations
+	float temp_off1 = (((float)t_conv) / 16384.0 - ((float)digital_Temp1) / 1024.0) * ((float)digital_Temp2);
+	float temp_off2 = ((((float)t_conv) / 131072.0 - ((float)digital_Temp1) / 8192.0) * (((float)adc_t)/131072.0 - ((float)digital_Temp1)/8192.0)) * ((float)digital_Temp3);
+	
+	float t_after = (long)(temp_off1 + temp_off2);
+	float t_after2 = (temp_off1 + temp_off2) / 5120.0;
+	float t_final = t_after2 * 1.8 + 32;
+
+	// Pressure offset calculations
+	pres_off1 = ((float)t_after / 2.0) - 64000.0;
+	pres_off2 = pres_off1 * pres_off1 * ((float)digital_Pres6) / 32768.0;
+	pres_off2 = pres_off2 + pres_off1 * ((float)digital_Pres5) * 2.0;
+	pres_off2 = (pres_off2 / 4.0) + (((float)digital_Pres4) * 65536.0);
+	pres_off1 = (((float) digital_Pres3) * pres_off1 * pres_off1 / 524288.0 + ((float) digital_Pres2) * pres_off1) / 524288.0;
+	pres_off1 = (1.0 + pres_off1 / 32768.0) * ((float)digital_Pres1);
+	float pres_after = 1048576.0 - (float)p_conv;
+	pres_after = (pres_after - (pres_off2 / 4096.0)) * 6250.0 / pres_off1;
+	pres_off1 = ((float) digital_Pres9) * pres_after * pres_after / 2147483648.0;
+	pres_off2 = pres_after * ((float) digital_Pres8) / 32768.0;
+	float pressure_final = (pres_after + (pres_off1 + pres_off2 + ((float)digital_Pres7)) / 16.0) / 100;
 	
 }	
