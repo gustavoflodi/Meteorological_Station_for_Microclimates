@@ -1,4 +1,4 @@
-//Authors: Gustavo Lodi, Nicholas Peçanha, Gustavo Malazavi
+//Authors: Gustavo Lodi, Nicholas Peçanha, Gustavo Malazavi.
 //Goal: Meteorological Station for Microclimates using knowledge adquired with Embedded Systems subject at Univeristy of São Paulo
 
 //LIBs
