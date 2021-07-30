@@ -83,6 +83,13 @@ void main()
 		dig_P9 -= 65536;
 	}
 
+	// Select control humidity register(0xF2)
+	// Humidity over sampling rate = 1(0x01)
+	char config[2] = {0};
+	config[0] = 0xF2;
+	config[1] = 0x01;
+	write(file, config, 2);
+
 	// Read 1 byte of data from register(0xA1)
 	reg[0] = 0xA1;
 	write(file, reg, 1);
