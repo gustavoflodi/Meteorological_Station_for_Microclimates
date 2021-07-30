@@ -1,9 +1,3 @@
-// Distributed with a free-will license.
-// Use it any way you want, profit or free, provided it fits in the licenses of its associated works.
-// BME280
-// This code is designed to work with the BME280_I2CS I2C Mini Module available from ControlEverything.com.
-// https://www.controleverything.com/content/Humidity?sku=BME280_I2CS#tabs-0-product_tabset-2
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <linux/i2c-dev.h>
@@ -12,7 +6,6 @@
 
 void main()
 {
-	// Create I2C bus
 	int file;
 	char *bus = "/dev/i2c-1";
 	if ((file = open(bus, O_RDWR)) < 0)
@@ -102,36 +95,6 @@ void main()
 	write(file, reg, 1);
 	read(file, b1, 7);
 
-	// Convert the data
-	// humidity coefficents
-	int dig_H2 = (b1[0] + b1[1] * 256);
-	if (dig_H2 > 32767)
-	{
-		dig_H2 -= 65536;
-	}
-	int dig_H3 = b1[2] & 0xFF;
-	int dig_H4 = (b1[3] * 16 + (b1[4] & 0xF));
-	if (dig_H4 > 32767)
-	{
-		dig_H4 -= 65536;
-	}
-	int dig_H5 = (b1[4] / 16) + (b1[5] * 16);
-	if (dig_H5 > 32767)
-	{
-		dig_H5 -= 65536;
-	}
-	int dig_H6 = b1[6];
-	if (dig_H6 > 127)
-	{
-		dig_H6 -= 256;
-	}
-
-	// Select control humidity register(0xF2)
-	// Humidity over sampling rate = 1(0x01)
-	char config[2] = {0};
-	config[0] = 0xF2;
-	config[1] = 0x01;
-	write(file, config, 2);
 	// Select control measurement register(0xF4)
 	// Normal mode, temp and pressure over sampling rate = 1(0x27)
 	config[0] = 0xF4;
@@ -144,7 +107,7 @@ void main()
 	write(file, config, 2);
 
 	// Read 8 bytes of data from register(0xF7)
-	// pressure msb1, pressure msb, pressure lsb, temp msb1, temp msb, temp lsb, humidity lsb, humidity msb
+	// pressure msb1, pressure msb, pressure lsb, temp msb1, temp msb, temp lsb
 	reg[0] = 0xF7;
 	write(file, reg, 1);
 	read(file, data, 8);
@@ -152,8 +115,6 @@ void main()
 	// Convert pressure and temperature data to 19-bits
 	long adc_p = ((long)(data[0] * 65536 + ((long)(data[1] * 256) + (long)(data[2] & 0xF0)))) / 16;
 	long adc_t = ((long)(data[3] * 65536 + ((long)(data[4] * 256) + (long)(data[5] & 0xF0)))) / 16;
-	// Convert the humidity data
-	long adc_h = (data[6] * 256 + data[7]);
 
 	// Temperature offset calculations
 	float var1 = (((float)adc_t) / 16384.0 - ((float)dig_T1) / 1024.0) * ((float)dig_T2);
@@ -177,22 +138,8 @@ void main()
 	var2 = p * ((float)dig_P8) / 32768.0;
 	float pressure = (p + (var1 + var2 + ((float)dig_P7)) / 16.0) / 100;
 
-	// Humidity offset calculations
-	float var_H = (((float)t_fine) - 76800.0);
-	var_H = (adc_h - (dig_H4 * 64.0 + dig_H5 / 16384.0 * var_H)) * (dig_H2 / 65536.0 * (1.0 + dig_H6 / 67108864.0 * var_H * (1.0 + dig_H3 / 67108864.0 * var_H)));
-	float humidity = var_H * (1.0 - dig_H1 * var_H / 524288.0);
-	if (humidity > 100.0)
-	{
-		humidity = 100.0;
-	}
-	else if (humidity < 0.0)
-	{
-		humidity = 0.0;
-	}
-
 	// Output data to screen
 	printf("Temperature in Celsius : %.2f C \n", cTemp);
 	printf("Temperature in Fahrenheit : %.2f F \n", fTemp);
 	printf("Pressure : %.2f hPa \n", pressure);
-	printf("Relative Humidity : %.2f RH \n", humidity);
 }
