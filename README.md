@@ -12,4 +12,4 @@ O projeto foi dividido, respectivamente, nas macroetapas de:
 
 4) Testes e Validação do projeto.
 
-Importante destacar que maiores detalhes são encontrados nos README dos sub-diretórios desse repositório referentes a cada uma das macroetapas.
+Importante destacar que maiores detalhes juntamente com imagens são encontrados nos README dos sub-diretórios desse repositório referentes às macroetapas.
