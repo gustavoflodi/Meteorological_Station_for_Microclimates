@@ -13,7 +13,7 @@ void main()
 		printf("Failed to open the bus. \n");
 		exit(1);
 	}
-	// Get I2C device, BME280 I2C address is 0x76(136)
+	// O endereço do BME280 I2C é 0x76(136)
 	ioctl(file, I2C_SLAVE, 0x76);
 
 	
