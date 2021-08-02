@@ -1,6 +1,6 @@
 ### Overview Specs
 
-Beaglebone black
+Beaglebone black <br />
 Middleware
 Linux ubuntu
 Applications
