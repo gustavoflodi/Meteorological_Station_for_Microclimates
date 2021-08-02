@@ -1,9 +1,10 @@
 ### Overview Specs
 
 Beaglebone black <br />
-Middleware
-Linux ubuntu
-Applications
-Lib
-Bootloader
-BME 
+BMP280 <br />
+Middleware <br />
+Linux ubuntu <br />
+Applications <br />
+Lib <br />
+Bootloader <br />
+BME <br />
