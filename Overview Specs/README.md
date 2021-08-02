@@ -1,7 +1,6 @@
 ### Overview Specs
-Microcontrolador utilizado: <br />
-Toradex VF <br />
-BMP280 <br />
+Microcontrolador utilizado: Toradex VF <br />
+Sensor de Temperatura e BMP280 <br />
 Linux ubuntu <br />
 Middleware <br />
 Applications <br />
