@@ -16,7 +16,8 @@ void main()
 	// Get I2C device, BME280 I2C address is 0x76(136)
 	ioctl(file, I2C_SLAVE, 0x76);
 
-	// Read 24 bytes of data from register(0x88)
+	
+	// Lê dados de 24 bytes do registrador(0x88)
 	char reg[1] = {0x88};
 	write(file, reg, 1);
 	char b1[24] = {0};
@@ -26,8 +27,10 @@ void main()
 		exit(1);
 	}
 
-	// Convert the data
-	// temp coefficents
+	
+	// Converte os dados
+	// Coeficientes de tempo
+	
 	int dig_T1 = (b1[0] + b1[1] * 256);
 	int dig_T2 = (b1[2] + b1[3] * 256);
 	if (dig_T2 > 32767)
@@ -40,7 +43,7 @@ void main()
 		dig_T3 -= 65536;
 	}
 
-	// pressure coefficents
+	// Coeficientes de pressão
 	int dig_P1 = (b1[6] + b1[7] * 256);
 	int dig_P2 = (b1[8] + b1[9] * 256);
 	if (dig_P2 > 32767)
@@ -83,47 +86,51 @@ void main()
 		dig_P9 -= 65536;
 	}
 
+
 	// Select control humidity register(0xF2)
 	// Humidity over sampling rate = 1(0x01)
 	char config[2] = {0};
 	config[0] = 0xF2;
 	config[1] = 0x01;
 	write(file, config, 2);
-
-	// Read 1 byte of data from register(0xA1)
+	
+	// Lê 1 byte de dado do registrador(0xA1)
 	reg[0] = 0xA1;
 	write(file, reg, 1);
 	char data[8] = {0};
 	read(file, data, 1);
 	int dig_H1 = data[0];
-
-	// Read 7 bytes of data from register(0xE1)
+	
+	//Lê 7 bytes de dados do registrador(0xE1)
 	reg[0] = 0xE1;
 	write(file, reg, 1);
 	read(file, b1, 7);
-
-	// Select control measurement register(0xF4)
-	// Normal mode, temp and pressure over sampling rate = 1(0x27)
+	
+	// Seleciona o registrador de controle de medidas (0xF4)
+	// Normal mode, temperatura e pressão oversampling rate = 1(0x27)
 	config[0] = 0xF4;
 	config[1] = 0x27;
 	write(file, config, 2);
-	// Select config register(0xF5)
-	// Stand_by time = 1000 ms(0xA0)
+	
+	
+	// Seleciona o config register(0xF5)
+	// Stand_by time  igual a 1000 ms(0xA0)
 	config[0] = 0xF5;
 	config[1] = 0xA0;
 	write(file, config, 2);
-
-	// Read 8 bytes of data from register(0xF7)
-	// pressure msb1, pressure msb, pressure lsb, temp msb1, temp msb, temp lsb
+	
+	//Lê 8 bytes de dados do registrador (0xF7)
+	//Pressão msb1, pressão msb, pressão lsb, temperatura msb1, temperatura msb, temperatura lsb
 	reg[0] = 0xF7;
 	write(file, reg, 1);
 	read(file, data, 8);
+	
 
-	// Convert pressure and temperature data to 19-bits
+	// Converte os dados de pressão e temperatura para 19 bits
 	long adc_p = ((long)(data[0] * 65536 + ((long)(data[1] * 256) + (long)(data[2] & 0xF0)))) / 16;
 	long adc_t = ((long)(data[3] * 65536 + ((long)(data[4] * 256) + (long)(data[5] & 0xF0)))) / 16;
 
-	// Temperature offset calculations
+	// Cálculos de offset de temperatura
 	float var1 = (((float)adc_t) / 16384.0 - ((float)dig_T1) / 1024.0) * ((float)dig_T2);
 	float var2 = ((((float)adc_t) / 131072.0 - ((float)dig_T1) / 8192.0) *
 				  (((float)adc_t) / 131072.0 - ((float)dig_T1) / 8192.0)) *
@@ -132,7 +139,7 @@ void main()
 	float cTemp = (var1 + var2) / 5120.0;
 	float fTemp = cTemp * 1.8 + 32;
 
-	// Pressure offset calculations
+	// Cálculos de offset de pressão
 	var1 = ((float)t_fine / 2.0) - 64000.0;
 	var2 = var1 * var1 * ((float)dig_P6) / 32768.0;
 	var2 = var2 + var1 * ((float)dig_P5) * 2.0;
@@ -145,7 +152,7 @@ void main()
 	var2 = p * ((float)dig_P8) / 32768.0;
 	float pressure = (p + (var1 + var2 + ((float)dig_P7)) / 16.0) / 100;
 
-	// Output data to screen
+	// Exibe os dados de temperatura e pressão na tela
 	printf("Temperature in Celsius : %.2f C \n", cTemp);
 	printf("Temperature in Fahrenheit : %.2f F \n", fTemp);
 	printf("Pressure : %.2f hPa \n", pressure);
