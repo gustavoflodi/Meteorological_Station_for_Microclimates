@@ -1,5 +1,10 @@
 # Meteorological_Station_for_Microclimates
 
+# Materiais e Métodos 
+
+A arquitetura do sistema pode ser dividida em 3 blocos: A interface do usuário, o microprocessador e o sensor. A interface irá apresentar de forma visual os dados que o sensor BME280 adquirir, que são temperatura e pressão. Estes dados então são lidos pelo microprocessador, que seria a BeagleBone Black (dependo da disponibilidade no laboratório) e convertidos através do código em linguagem C.
+
+
 Projeto de Sistemas Embarcados. Será aplicado os conhecimentos de embarcados para simular uma estação meteorológica de microclimas.
 
 O projeto foi dividido, respectivamente, nas macroetapas de:
