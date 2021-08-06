@@ -1,3 +1,7 @@
+#### Gustavo Fernandes Lodi - 10308801
+#### Gustavo Ogera Malavazi - 10388645
+#### Nicholas Jose Peçanha - 10309312
+
 # Meteorological_Station_for_Microclimates
 
 
