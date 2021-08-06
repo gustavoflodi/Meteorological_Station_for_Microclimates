@@ -5,9 +5,9 @@
 
 O projeto teve como objetivo a construção de uma Estação Meteorológica para Microclimas, utilizando como base os conhecimentos adquiridos ao longo do desenvolvimento da disciplina de Sistemas Embarcados. O projeto teve como macroetapas: 
 
-* Definição do ambiente de trabalho, especificamente, a máquina Host, o SO que usaríamos pela disponibilidade do grupo, a IDE, a ferramenta de versionamento, as bibliotecas e, finalmente, o micro-controlador target do projeto. Para consolidação e validação com todo o grupo e com os doscentes da disciplina, foi confeccionado um diagrama de blocos, contendo os componentes a serem utilizados. **Melhor descrito em Materiais e Métodos.**
+* Definição do ambiente de trabalho, especificamente, a máquina Host, o SO que usaríamos pela disponibilidade do grupo, a IDE, a ferramenta de versionamento, as bibliotecas e, finalmente, o micro-controlador target do projeto. Para consolidação e validação com todo o grupo e com os doscentes da disciplina, foi confeccionado um diagrama de blocos, contendo os componentes a serem utilizados. 
 
-* Considerações de hardware, ou seja, especificação do microcontrolador, protocolo de comunicação, particularmente o modelo de barramento compatível com o projeto, sensores dos parâmetros que seriam medidos e, finalmente, o projeto mecânico, ou seja, ancoragem de conectores, necessidade de encapsulamento tipo de estrutura. **Melhor descrito em Materiais e Métodos.**
+* Considerações de hardware, ou seja, especificação do microcontrolador, protocolo de comunicação, particularmente o modelo de barramento compatível com o projeto, sensores dos parâmetros que seriam medidos e, finalmente, o projeto mecânico, ou seja, ancoragem de conectores, necessidade de encapsulamento tipo de estrutura. 
 
 * Definição da linguagem de programação a ser utilizada e codificação do programa. Ou seja, desenvolvimento da aplicação e maior entendimento do Build Process do microcontrolador Toradex VF Colibri para acesso aos registradores e espaços específicos do memory map do sensor. Implementação da comunicação entre cliente e servidor para simulação de uma interação com a Estação Meteorológica. E, finalmente, design da interface a ser visualizada pelo cliente ou usuário da estação. **Melhor descrito em Desenvolvimento.**
 
