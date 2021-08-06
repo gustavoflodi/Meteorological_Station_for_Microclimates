@@ -21,5 +21,11 @@ A imagem abaixo resumo a lógica de aquisição e exibição dos dados.
 
 ![alt text](https://github.com/selnoom/Meteorological_Station_for_Microclimates/blob/main/Overview%20Specs/DiagramaComponentes_toradex.jpg?raw=true)
 
+Falando mais especificamente do sensor BMP280:
+  Capacidade de medição pressão:  300 a 1100 hPa, que seria de +9000m a -500m em relação ao nível do mar
+	Erro: 0.12 hPa equivalente a ± 1m
+	Capacidade de medição temperatura: -40°C a +80°C
+  Interface digital: I²C (up to 3.4 MHz) e SPI (3 and 4 wire, up to 10 MHz)
+  Consumo de corrente: 2.7 μA a 1 Hz de aquisição
 
 
