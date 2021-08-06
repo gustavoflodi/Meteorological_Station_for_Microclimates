@@ -1,3 +1,4 @@
+//Bibliotecas padrões em C e para permitir a conexão/leitura do sensor
 #include <stdio.h>
 #include <stdlib.h>
 #include <linux/i2c-dev.h>
@@ -6,27 +7,30 @@
 
 void main()
 {
+	//Conexão com o bus da placa
 	int file;
-	/*char *bus = "/dev/i2c-1";
+	char *bus = "/dev/colibri-i2c1";
 	if ((file = open(bus, O_RDWR)) < 0)
 	{
+		//Mensagem pra mostrar em caso de erro de conexão
 		printf("Sem conexão. \n");
 		exit(1);
-	}*/
+	}
 	// Endereçamento
 	ioctl(file, I2C_SLAVE, 0x76);
 
-	// Ler bits do registrador
+	// Configurar calibração do sensor
 	char reg[1] = {0x88};
 	write(file, reg, 1);
 	char b1[24] = {0};
 	if (read(file, b1, 24) != 24)
 	{
+		//Mensagem de erro e abortar programa se a calibração não funcionar
 		printf("Error : Input/Output error \n");
 		exit(1);
 	}
 
-	// Conversão dos dados
+	// Conversão dos dados de acordo com o datasheet
 	// temperatura
 	int dig_T1 = (b1[0] + b1[1] * 256);
 	int dig_T2 = (b1[2] + b1[3] * 256);
@@ -83,9 +87,9 @@ void main()
 		dig_P9 -= 65536;
 	}
 
-	char config[2] = {0};
-	config[0] = 0xF2;
-	config[1] = 0x01;
+	char config[2] = {0}; //Bit 0 = 0, configuração do sensor
+	config[0] = 0xF2;	  //Bit F2 = 0, configuração do sensor
+	config[1] = 0x01;	  //Bit 01 = 1, configuração do sensor
 	write(file, config, 2);
 
 	// Ler bits do registrador
@@ -103,18 +107,17 @@ void main()
 	config[0] = 0xF4;
 	config[1] = 0x27;
 	write(file, config, 2);
-	// Configurar registrador
-	// Tempo de standby
+	// Configurar registrador de tempo de standby
 	config[0] = 0xF5;
 	config[1] = 0xA0;
 	write(file, config, 2);
 
-	// bits mais e menos significativos
+	// bits mais e menos significativos da pressão
 	reg[0] = 0xF7;
 	write(file, reg, 1);
 	read(file, data, 8);
 
-	// Conversão
+	// Conversões
 	long adc_p = ((long)(data[0] * 65536 + ((long)(data[1] * 256) + (long)(data[2] & 0xF0)))) / 16;
 	long adc_t = ((long)(data[3] * 65536 + ((long)(data[4] * 256) + (long)(data[5] & 0xF0)))) / 16;
 
