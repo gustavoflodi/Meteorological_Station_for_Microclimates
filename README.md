@@ -24,8 +24,20 @@ A imagem abaixo resumo a lógica de aquisição e exibição dos dados.
 Falando mais especificamente do sensor BMP280:
   Capacidade de medição pressão:  300 a 1100 hPa, que seria de +9000m a -500m em relação ao nível do mar
 	Erro: 0.12 hPa equivalente a ± 1m
+	
 	Capacidade de medição temperatura: -40°C a +80°C
   Interface digital: I²C (up to 3.4 MHz) e SPI (3 and 4 wire, up to 10 MHz)
   Consumo de corrente: 2.7 μA a 1 Hz de aquisição
+  
+# Plataforma de Desenvolvimento e Ferramentas
 
+Durante o desenvolvimento do projeto, algumas ferramentas foram essenciais. Como sistema operacional, foi usado o Linux. Para desenvolver o código do projeto, o grupo optou pela IDE VS Code, pela experiência prévia com a plataforma. Para o versionamento do código, foi usado Git nas máquinas dos integrantes e GitHub para garantir que todos pudessem estar atualizados quanto ao código. Algumas interfaces gráficas ajudaram nisso, sendo elas o GitKraken e o p4merge.
+
+# Desenvolvimento
+
+# Lógica de programação
+Apesar de ter sido escolhido o sensor BMP280 para fazer as medições do projeto, durante a etapa de desenvolvimento foi também explorado a ideia de usar o sesnor de temperatura, pressão e umidade OAK RH. Esse sensor foi uma sugestão do professor, por já estar disponível no laboratório e ser da própria toradex. Foram desenvolvidos algumas amostras de código com base nesse sensor que ainda se encontra neste repositório, mas, por fim, o grupo decidiu seguir como o BMP280. Portanto, essa seção irá abordar apenas o código desse sensor usado.
+De forma resumida, podemos descrever o código da seguinte forma: Declaração das bibliotecas (padrões da linguagem C e algumas esepcíficas do sensor), conexão com o bus da placa, configuração dos modos de operação do sensor e da sua calibração, conversões para interpretar as medidas e finalmente a impressão dessas medidas para o usuário no prompt de comando. Vale ressaltar que há algumas condições dentro do código que garantem a segurança do seu funcionamento, abortando a execução e avisando o usuário que existe um problema caso a conexão falhe ou caso a calibração não ocorra pela conexão erradas dos pinos. Todos esses procedimento estão comentados no código para acompanhar com mais facilidade. 
+# Conexões
+A conexão entre o sensor e a placa foi obtido por meio de um protoboard. SE baseou no protocolo I2C, que providencia o bus nos pinos 194/196. Porém, conectando o viola na placa, é necessário estar atento as novas posições dos pinos a serem usados, o 5 e 6. Nesses pinos foram conectados o SDA (comunicação serial) e SCL (controle de clock) do sensor. Também foi necessário alimentar o sensor, mas isso foi feito com os pinos 5V e GND da própria placa. A comunicação entre o computador e o embarcado foi feito com conexão USB, mas também é possível com um cabo de ethernet.
 
