@@ -55,6 +55,8 @@ Para desenvolver a interface a ser utilizada pelos usuários da estação de mic
 
 A escolha da ferramenta Qt Designer para configuração da aplicação gráfica é justificada pela facilidade que ela adiciona ao projeto à configuração de variáveis como tamanho de letra, posição dos componentes, cor dos itens, o que aumentaria o tempo de implementação, ou seja, a ferramenta adicionou uma parte Low-code efetiva ao trabalho.
 
+![alt text](https://github.com/selnoom/Meteorological_Station_for_Microclimates/blob/main/Code/Interface_Visual.jpeg)
+
 # Resultados
 
 Devido a situação anormal da realização da disciplina, sendo todo o aprendizado e as práticas feitas a distância, surgiram alguns desafios que impactaram nos resultados obtidos. Isso foi observado especialmente na etapa de conexão entre placa e sensor, que é algo que deve ser testado repetidamente para funcionar, porém não foi possível ter tantas oportunidades de executar estes testes. A imagem a seguir mostra um pouco da trajetória do código desenvolvido:
