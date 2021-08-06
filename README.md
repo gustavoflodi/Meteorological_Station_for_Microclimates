@@ -35,15 +35,15 @@ Durante o desenvolvimento do projeto, algumas ferramentas foram essenciais. Como
 
 # Desenvolvimento
 
-# Lógica de programação
+## Lógica de programação
 Apesar de ter sido escolhido o sensor BMP280 para fazer as medições do projeto, durante a etapa de desenvolvimento foi também explorado a ideia de usar o sesnor de temperatura, pressão e umidade OAK RH. Esse sensor foi uma sugestão do professor, por já estar disponível no laboratório e ser da própria toradex. Foram desenvolvidos algumas amostras de código com base nesse sensor que ainda se encontra neste repositório, mas, por fim, o grupo decidiu seguir como o BMP280. Portanto, essa seção irá abordar apenas o código desse sensor usado.
 De forma resumida, podemos descrever o código da seguinte forma: Declaração das bibliotecas (padrões da linguagem C e algumas esepcíficas do sensor), conexão com o bus da placa, configuração dos modos de operação do sensor e da sua calibração, conversões para interpretar as medidas e finalmente a impressão dessas medidas para o usuário no prompt de comando. Vale ressaltar que há algumas condições dentro do código que garantem a segurança do seu funcionamento, abortando a execução e avisando o usuário que existe um problema caso a conexão falhe ou caso a calibração não ocorra pela conexão erradas dos pinos. Todos esses procedimento estão comentados no código para acompanhar com mais facilidade. Segue abaixo um fluxograma demonstrando toda a lógica:                              		 
 ![alt text](https://github.com/selnoom/Meteorological_Station_for_Microclimates/blob/main/Imagens/Untitled%20Diagram.png)
 
-# Conexões
+## Conexões
 A conexão entre o sensor e a placa foi obtido por meio de um protoboard. SE baseou no protocolo I2C, que providencia o bus nos pinos 194/196. Porém, conectando o viola na placa, é necessário estar atento as novas posições dos pinos a serem usados, o 5 e 6. Nesses pinos foram conectados o SDA (comunicação serial) e SCL (controle de clock) do sensor. Também foi necessário alimentar o sensor, mas isso foi feito com os pinos 5V e GND da própria placa. A comunicação entre o computador e o embarcado foi feito com conexão USB, mas também é possível com um cabo de ethernet.
 
-# Resultados
+## Resultados
 Devido a situação anormal da realização da disciplina, sendo todo o aprendizado e as práticas feitas a distância, surgiram alguns desafios que impactaram nos resultados obtido. Isso foi observado especialmente na etapa de conexão entre placa e sensor, que é algo que deve ser testado repetidamente para funcionar, porém não foi possível ter tantas oportunidades de executar estes testes. A imagem a seguir mostra um pouco da trajetória do código desenvolvido:
 ![alt text](https://github.com/selnoom/Meteorological_Station_for_Microclimates/blob/main/Imagens/GitKraken.png)
 
