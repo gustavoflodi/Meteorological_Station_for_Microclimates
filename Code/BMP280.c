@@ -7,16 +7,16 @@
 void main()
 {
 	int file;
-	char *bus = "/dev/i2c-1";
+	/*char *bus = "/dev/i2c-1";
 	if ((file = open(bus, O_RDWR)) < 0)
 	{
-		printf("Failed to open the bus. \n");
+		printf("Sem conexão. \n");
 		exit(1);
-	}
-	// Get I2C device, BME280 I2C address is 0x76(136)
+	}*/
+	// Endereçamento
 	ioctl(file, I2C_SLAVE, 0x76);
 
-	// Read 24 bytes of data from register(0x88)
+	// Ler bits do registrador
 	char reg[1] = {0x88};
 	write(file, reg, 1);
 	char b1[24] = {0};
@@ -26,8 +26,8 @@ void main()
 		exit(1);
 	}
 
-	// Convert the data
-	// temp coefficents
+	// Conversão dos dados
+	// temperatura
 	int dig_T1 = (b1[0] + b1[1] * 256);
 	int dig_T2 = (b1[2] + b1[3] * 256);
 	if (dig_T2 > 32767)
@@ -40,7 +40,7 @@ void main()
 		dig_T3 -= 65536;
 	}
 
-	// pressure coefficents
+	// pressão
 	int dig_P1 = (b1[6] + b1[7] * 256);
 	int dig_P2 = (b1[8] + b1[9] * 256);
 	if (dig_P2 > 32767)
@@ -83,47 +83,42 @@ void main()
 		dig_P9 -= 65536;
 	}
 
-	// Select control humidity register(0xF2)
-	// Humidity over sampling rate = 1(0x01)
 	char config[2] = {0};
 	config[0] = 0xF2;
 	config[1] = 0x01;
 	write(file, config, 2);
 
-	// Read 1 byte of data from register(0xA1)
+	// Ler bits do registrador
 	reg[0] = 0xA1;
 	write(file, reg, 1);
 	char data[8] = {0};
 	read(file, data, 1);
 	int dig_H1 = data[0];
 
-	// Read 7 bytes of data from register(0xE1)
 	reg[0] = 0xE1;
 	write(file, reg, 1);
 	read(file, b1, 7);
 
-	// Select control measurement register(0xF4)
-	// Normal mode, temp and pressure over sampling rate = 1(0x27)
+	// Selecionar modo de leitura
 	config[0] = 0xF4;
 	config[1] = 0x27;
 	write(file, config, 2);
-	// Select config register(0xF5)
-	// Stand_by time = 1000 ms(0xA0)
+	// Configurar registrador
+	// Tempo de standby
 	config[0] = 0xF5;
 	config[1] = 0xA0;
 	write(file, config, 2);
 
-	// Read 8 bytes of data from register(0xF7)
-	// pressure msb1, pressure msb, pressure lsb, temp msb1, temp msb, temp lsb
+	// bits mais e menos significativos
 	reg[0] = 0xF7;
 	write(file, reg, 1);
 	read(file, data, 8);
 
-	// Convert pressure and temperature data to 19-bits
+	// Conversão
 	long adc_p = ((long)(data[0] * 65536 + ((long)(data[1] * 256) + (long)(data[2] & 0xF0)))) / 16;
 	long adc_t = ((long)(data[3] * 65536 + ((long)(data[4] * 256) + (long)(data[5] & 0xF0)))) / 16;
 
-	// Temperature offset calculations
+	// Offset
 	float var1 = (((float)adc_t) / 16384.0 - ((float)dig_T1) / 1024.0) * ((float)dig_T2);
 	float var2 = ((((float)adc_t) / 131072.0 - ((float)dig_T1) / 8192.0) *
 				  (((float)adc_t) / 131072.0 - ((float)dig_T1) / 8192.0)) *
@@ -132,7 +127,7 @@ void main()
 	float cTemp = (var1 + var2) / 5120.0;
 	float fTemp = cTemp * 1.8 + 32;
 
-	// Pressure offset calculations
+	// Offset da pressão
 	var1 = ((float)t_fine / 2.0) - 64000.0;
 	var2 = var1 * var1 * ((float)dig_P6) / 32768.0;
 	var2 = var2 + var1 * ((float)dig_P5) * 2.0;
@@ -145,7 +140,7 @@ void main()
 	var2 = p * ((float)dig_P8) / 32768.0;
 	float pressure = (p + (var1 + var2 + ((float)dig_P7)) / 16.0) / 100;
 
-	// Output data to screen
+	// Output dos dados no terminal
 	printf("Temperature in Celsius : %.2f C \n", cTemp);
 	printf("Temperature in Fahrenheit : %.2f F \n", fTemp);
 	printf("Pressure : %.2f hPa \n", pressure);
