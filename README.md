@@ -19,7 +19,7 @@ A arquitetura do sistema pode ser dividida em 3 blocos: A interface do usuário,
 A ideia inicial do nosso projeto era utilizar a BeagleBone Black. No entanto, pela indisponibilidade, utilizamos a Toradex VF Colibri.
 A imagem abaixo resumo a lógica de aquisição e exibição dos dados.
 
-![alt text](https://github.com/selnoom/Meteorological_Station_for_Microclimates/blob/main/Overview%20Specs/DiagramaComponentes_toradex.jpg?raw=true =250x250)
+![alt text]("https://github.com/selnoom/Meteorological_Station_for_Microclimates/blob/main/Overview%20Specs/DiagramaComponentes_toradex.jpg?raw=true" =250x250)
 
 
 
