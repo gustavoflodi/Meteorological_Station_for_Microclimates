@@ -37,7 +37,7 @@ Durante o desenvolvimento do projeto, algumas ferramentas foram essenciais. Como
 
 # Lógica de programação
 Apesar de ter sido escolhido o sensor BMP280 para fazer as medições do projeto, durante a etapa de desenvolvimento foi também explorado a ideia de usar o sesnor de temperatura, pressão e umidade OAK RH. Esse sensor foi uma sugestão do professor, por já estar disponível no laboratório e ser da própria toradex. Foram desenvolvidos algumas amostras de código com base nesse sensor que ainda se encontra neste repositório, mas, por fim, o grupo decidiu seguir como o BMP280. Portanto, essa seção irá abordar apenas o código desse sensor usado.
-De forma resumida, podemos descrever o código da seguinte forma: Declaração das bibliotecas (padrões da linguagem C e algumas esepcíficas do sensor), conexão com o bus da placa, configuração dos modos de operação do sensor e da sua calibração, conversões para interpretar as medidas e finalmente a impressão dessas medidas para o usuário no prompt de comando. Vale ressaltar que há algumas condições dentro do código que garantem a segurança do seu funcionamento, abortando a execução e avisando o usuário que existe um problema caso a conexão falhe ou caso a calibração não ocorra pela conexão erradas dos pinos. Todos esses procedimento estão comentados no código para acompanhar com mais facilidade. Segue abaixo um fluxograma demonstrando toda a lógica:
+De forma resumida, podemos descrever o código da seguinte forma: Declaração das bibliotecas (padrões da linguagem C e algumas esepcíficas do sensor), conexão com o bus da placa, configuração dos modos de operação do sensor e da sua calibração, conversões para interpretar as medidas e finalmente a impressão dessas medidas para o usuário no prompt de comando. Vale ressaltar que há algumas condições dentro do código que garantem a segurança do seu funcionamento, abortando a execução e avisando o usuário que existe um problema caso a conexão falhe ou caso a calibração não ocorra pela conexão erradas dos pinos. Todos esses procedimento estão comentados no código para acompanhar com mais facilidade. Segue abaixo um fluxograma demonstrando toda a lógica:                              		 
 ![alt text](https://github.com/selnoom/Meteorological_Station_for_Microclimates/blob/main/Imagens/Untitled%20Diagram.png)
 
 # Conexões
@@ -61,3 +61,17 @@ Outros pontos importantes que valem ser destacados são que o sensor não foi so
 A disciplina de Sistemas Embarcados se mostrou ao mesmo tempo como algo importante para tecnologia moderna e essencial para a formação do engenheiro, quanto como uma área muito desafiadora e que exige dedicação para conseguir aplicar ela na prática. Para poder criar um projeto baseado num sistema de embarcado, é necessário ter conhecimento de muitos tópicos, como toda a estrutura dentro dela, conhecimento de sistemas operacionais, Kernel, ToolChain, de hardware e de toda a comunicação a ser feito entre essas unidades, o que torna projetos deste tipo extremamente complexos. Além disso, o fato das práticas serem a distância colocam certa dificuldade de poder experimentar esse aprendizado, já que não é sempre que terá disponibilidade de testar os códigos desenvolvidos.
 
 Mesmo com essa complexidade e dificuldade, ainda foi possível tirar um imenso aproveito da disciplina. Poder conhecer mais sobre todos os tópicos citados da computação é um grande diferencial pro mercado de trabalho e permite encarar problemas da engenharia de uma forma muito eficiente. O projeto desenvolvido ao longo do semestre consolidou esse aprendizado e, apesar de não ter funcionado perfeitamente no dia do teste, compilou de forma correta e com base nos erros, foi possível corrigir o código. Esses resultados foram muito significativos considerando a complexidade do desafio.
+
+# Referências
+Datasheets: 
+	https://docs.toradex.com/100090-oak-humidity-datasheet.pdf
+	https://docs.toradex.com/102879-colibri-arm-viola-carrier-board-datasheet.pdf
+	https://developer1.toradex.com/files/toradex-dev/uploads/media/Oak/Oak_ProgrammingGuide.pdf
+Configurando a placa e comandos:
+	https://developer.toradex.com/getting-started/module-2-my-first-hello-world-in-c/build-from-command-line?som=colibri-vf61&board=colibri-evaluation-board&os=linux&desktop=linux
+	https://developer.toradex.com/knowledge-base/i2c-linux#tab-bsp-5
+	https://developer.toradex.com/knowledge-base/oak-programming-tutorial-for-windows
+Tutorial:
+	https://www.youtube.com/watch?v=j_ulsIMLq_s
+	
+	
