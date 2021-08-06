@@ -28,5 +28,14 @@ Falando mais especificamente do sensor BMP280:
 	Capacidade de medição temperatura: -40°C a +80°C
   Interface digital: I²C (up to 3.4 MHz) e SPI (3 and 4 wire, up to 10 MHz)
   Consumo de corrente: 2.7 μA a 1 Hz de aquisição
+  
+# Plataforma de Desenvolvimento e Ferramentas
 
-Durante o desenvolvimento do projeto, o uso de ferramentas de programação e ambiente foram essenciais. O sistema operacional na sua maioria usada foi Linux, pela maior facilidade de criar programas que se comuniquem diretamente com a máquina e para criar o código em si, foi usado a plataforma VS Code. Além disso, foi usado o Git nos repositórios dos integrantes do grupo e o GitHub para garantir que o código estivesse sempre atualizado. Algmas ferramentas visuais de Git ajudaram neste processo, sendo eles o GitKraken e o p4merge.
+Durante o desenvolvimento do projeto, algumas ferramentas foram essenciais. Como sistema operacional, foi usado o Linux. Para desenvolver o código do projeto, o grupo optou pela IDE VS Code, pela experiência prévia com a plataforma. Para o versionamento do código, foi usado Git nas máquinas dos integrantes e GitHub para garantir que todos pudessem estar atualizados quanto ao código. Algumas interfaces gráficas ajudaram nisso, sendo elas o GitKraken e o p4merge.
+
+# Desenvolvimento
+
+# Lógica de programação
+Apesar de ter sido escolhido o sensor BMP280 para fazer as medições do projeto, durante a etapa de desenvolvimento foi também explorado a ideia de usar o sesnor de temperatura, pressão e umidade OAK RH. Esse sensor foi uma sugestão do professor, por já estar disponível no laboratório e ser da própria toradex. Foram desenvolvidos algumas amostras de código com base nesse sensor que ainda se encontra neste repositório, mas, por fim, o grupo decidiu seguir como o BMP280. Portanto, essa seção irá abordar apenas o código desse sensor usado.
+
+De forma resumida, podemos descrever o código da seguinte forma: Declaração das bibliotecas (padrões da linguagem C e algumas esepcíficas do sensor), conexão com o bus da placa, configuração dos modos de operação do sensor e da sua calibração, conversões para interpretar as medidas e finalmente a impressão dessas medidas para o usuário no prompt de comando. Vale ressaltar que há algumas condições dentro do código que garantem a segurança do seu funcionamento, abortando a execução e avisando o usuário que existe um problema caso a conexão falhe ou caso a calibração não ocorra pela conexão erradas dos pinos. Todos esses procedimento estão comentados no código para acompanhar com mais facilidade. 
