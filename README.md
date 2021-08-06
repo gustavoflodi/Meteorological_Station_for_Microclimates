@@ -43,7 +43,14 @@ De forma resumida, podemos descrever o código da seguinte forma: Declaração d
 ## Conexões
 A conexão entre o sensor e a placa foi obtido por meio de um protoboard. SE baseou no protocolo I2C, que providencia o bus nos pinos 194/196. Porém, conectando o viola na placa, é necessário estar atento as novas posições dos pinos a serem usados, o 5 e 6. Nesses pinos foram conectados o SDA (comunicação serial) e SCL (controle de clock) do sensor. Também foi necessário alimentar o sensor, mas isso foi feito com os pinos 5V e GND da própria placa. A comunicação entre o computador e o embarcado foi feito com conexão USB, mas também é possível com um cabo de ethernet.
 
-## Resultados
+## Comunicação Cliente - Servidor
+Para o projeto, foi criado também um servidor em Python, hosteando a Interface, e que também recebe mensagens do Cliente, este último presente no Sistema Embarcado. As mensagens consistem nos dados de Temperatura e Pressão, obtidos pela leitura do sensor no código principal BMP280.c.
+
+Para desenvolver a interface a ser utilizada pelos usuários da estação de microclimas, foi utilizada a ferramenta Qt Design. Tal ferramenta desenvolve o códigoem .c a ser visualizado de forma gráfica, em seguida, o código da interface é convertido para Python. Para a parte estática, foi desenvolvido o fundo de tela na aplicação Photoshop, sendo uma imagem .png (adicionada no código), e três outros recursos, a saber, um botão de connect, cujo acionamento acarreta na comunicação com o servidor e dois display para mostrar os parâmetros lidos pelo sensor.
+
+A escolha da ferramenta Qt Designer para configuração da aplicação gráfica é justificada pela facilidade que ela adiciona ao projeto à configuração de variáveis como tamanho de letra, posição dos componentes, cor dos itens, o que aumentaria o tempo de implementação, ou seja, a ferramenta adicionou uma parte Low-code efetiva ao trabalho.
+
+# Resultados
 Devido a situação anormal da realização da disciplina, sendo todo o aprendizado e as práticas feitas a distância, surgiram alguns desafios que impactaram nos resultados obtido. Isso foi observado especialmente na etapa de conexão entre placa e sensor, que é algo que deve ser testado repetidamente para funcionar, porém não foi possível ter tantas oportunidades de executar estes testes. A imagem a seguir mostra um pouco da trajetória do código desenvolvido:
 ![alt text](https://github.com/selnoom/Meteorological_Station_for_Microclimates/blob/main/Imagens/GitKraken.png)
 
