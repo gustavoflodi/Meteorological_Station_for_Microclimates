@@ -5,3 +5,4 @@ Para os testes, estivemos no laboratório da USP, acessamos a rede para comunica
 Na máquina host foi criado o arquivo BMP280.c com o código do github, compilado pelo comando '{CC} -Wall BMP280.c -o BMP280c, gerando o executável. Para transferir o executável 
 a placa, foi usado o comando 'scp BMP280 root@XXX.X.XXX:home/root', sendo os X's, o endereço de IP da placa do laboratório. 
 
+Além disso, foram criados os arquivos de Cliente e Servidor, respectivamente em C e em Python, o último sendo desenvolvido por meio da aplicação Qt Design.
